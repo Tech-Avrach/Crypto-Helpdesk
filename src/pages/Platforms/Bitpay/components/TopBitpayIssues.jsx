@@ -1,0 +1,140 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
+
+export default function TopBitpayIssues() {
+  const leftColumnIssues = [
+    { title: "Managing my account", hasArrow: false, isCategory: true },
+    { title: "Returning customers resource guide", hasArrow: true },
+    { title: "2-step verification troubleshooting", hasArrow: true },
+    { title: "Submit a complaint", hasArrow: true },
+    { title: "Sending or receiving cryptocurrency", hasArrow: false, isCategory: true },
+    { title: "Why is my transaction pending?", hasArrow: true },
+    { title: "Steps to send crypto", hasArrow: true },
+    { title: "Assets on multiple networks", hasArrow: true }
+  ];
+
+  const rightColumnIssues = [
+    { title: "Trading and funding", hasArrow: false, isCategory: true },
+    { title: "Cash out your balance", hasArrow: true },
+    { title: "Why am I unable to buy Crypto?", hasArrow: true },
+    { title: "Bitpay pricing and fees disclosures", hasArrow: true },
+    { title: "Bitpay Earn", hasArrow: false, isCategory: true },
+    { title: "Tokens and regions eligible for staking", hasArrow: true },
+    { title: "Earn rewards with staking", hasArrow: true },
+    { title: "Learning rewards", hasArrow: true }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+
+  const IssueItem = ({ issue, index }) => (
+    <motion.div
+      variants={itemVariants}
+      className={`group cursor-pointer transition-all duration-300 ${
+        issue.isCategory 
+          ? 'py-4 border-b border-[#293b92] ' 
+          : 'py-4 px-4 rounded-xl border border-gray-100 hover:border-[#293b92] hover:bg-[#293b92]/30 hover:shadow-lg hover:shadow-[#293b92]/50 mb-3 bg-white'
+      }`}
+      whileHover={!issue.isCategory ? { x: 6, scale: 1.02 } : {}}
+      whileTap={!issue.isCategory ? { scale: 0.98 } : {}}
+    >
+      <div className="flex items-center justify-between">
+        <span className={`${ 
+          issue.isCategory 
+            ? 'text-lg font-semibold text-gray-800' 
+            : 'text-gray-700 group-hover:text-[#293b92] font-medium'
+        } transition-colors duration-300`}>
+          {issue.title}
+        </span>
+        {issue.hasArrow && (
+          <div className="relative">
+            <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-[#293b92] group-hover:translate-x-2 transition-all duration-300" />
+            <motion.div
+              className="absolute inset-0 bg-[#293b92] rounded-full -z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              whileHover={{ scale: 1.5, opacity: 0.3 }}
+              transition={{ duration: 0.2 }}
+            />
+          </div>
+        )}
+      </div>
+      {!issue.isCategory && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-[#293b92]/5 via-transparent to-[#293b92]/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          initial={false}
+        />
+      )}
+    </motion.div>
+  );
+
+  return (
+    <div className="w-full max-w-6xl mx-auto px-4 py-16 bg-white">
+      {/* Section Title */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="text-center mb-12"
+      >
+        <h2 className="text-3xl md:text-4xl font-light text-gray-800 mb-2">
+          Top{' '}
+          <span className="font-black text-[#293b92]">
+            Bitpay
+          </span>
+          {' '}
+          Issues
+        </h2>
+      </motion.div>
+
+      {/* Issues Grid */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="grid md:grid-cols-2 gap-6 md:gap-8"
+      >
+        {/* Left Column */}
+        <div className="space-y-1">
+          {leftColumnIssues.map((issue, index) => (
+            <IssueItem key={index} issue={issue} index={index} />
+          ))}
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-1">
+          {rightColumnIssues.map((issue, index) => (
+            <IssueItem key={index} issue={issue} index={index} />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Bottom Decoration */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0 }}
+        whileInView={{ opacity: 1, scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+        className="mt-16 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"
+      />
+    </div>
+  );
+}

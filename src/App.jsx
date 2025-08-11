@@ -1,13 +1,12 @@
 import Footer from "./component/Footer"
-import Home from "./pages/Home/Home"
-
-
-
+import Navbar from "./component/Navbar"
+import AppRoutes from "./redux/routes"
 
 const App = () => {
   return (
     <div>
-      <Home />
+      <Navbar />
+      <AppRoutes />
       <Footer />
     </div>
   )

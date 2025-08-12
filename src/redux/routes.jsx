@@ -7,6 +7,9 @@ import Robinhood from '../pages/Platforms/Robinhood/Robinhood';
 import Bitpay from '../pages/Platforms/Bitpay/Bitpay';
 import CharlesSchwab from '../pages/Platforms/CharlesSchwab/CharlesSchwab';
 import CashApp from '../pages/Platforms/CashApp/CashApp';
+import LoginIssues from '@/pages/HelpCategories/LoginIssues/LoginIssues';
+import PaymentIssues from '@/pages/HelpCategories/PaymentIssues/PaymentIssues';
+import KYCProblem from '@/pages/HelpCategories/KYCProblems/KYCProblem';
 
 const AppRoutes = () => {
   return (
@@ -18,6 +21,10 @@ const AppRoutes = () => {
       <Route path="/bitpay" element={<Bitpay />} />
       <Route path="/charlesschwab" element={<CharlesSchwab />} />
       <Route path="/cashapp" element={<CashApp />} />
+
+      <Route path="/help-center/login-issues" element={<LoginIssues />} />
+      <Route path="/help-center/payment-issues" element={<PaymentIssues />} />
+      <Route path="/help-center/kyc-issues" element={<KYCProblem />} />
     </Routes>
   );
 };

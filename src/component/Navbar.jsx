@@ -48,12 +48,13 @@ const Navbar = () => {
   ];
 
   const helpCategories = [
-    "Login Issues",
-    "Payment Issues", 
-    "KYC Problems",
-    "Withdrawal Issues",
-    "Security & 2FA",
+    { name: "Login Issues", path: "/help-center/login-issues" },
+    { name: "Payment Issues", path: "/help-center/payment-issues" },
+    { name: "KYC Problems", path: "/help-center/kyc-issues" },
+    { name: "Withdrawal Issues", path: "/" },
+    { name: "Security & 2FA", path: "/" },
   ];
+
 
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
@@ -63,11 +64,10 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-md py-2"
-            : "bg-white/90 backdrop-blur-sm border-b border-gray-100 py-4"
-        }`}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled
+          ? "bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-md py-2"
+          : "bg-white/90 backdrop-blur-sm border-b border-gray-100 py-4"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex justify-between items-center">
@@ -104,14 +104,16 @@ const Navbar = () => {
                       className="absolute top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2"
                     >
                       {helpCategories.map((item) => (
-                        <a
-                          key={item}
-                          href="#"
+                        <Link
+                          key={item.name}
+                          to={item.path || "/"}
                           className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                          onClick={() => setActiveDropdown(null)}
                         >
-                          {item}
-                        </a>
+                          {item.name}
+                        </Link>
                       ))}
+
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -225,9 +227,9 @@ const Navbar = () => {
 
               {/* Mobile Menu Items */}
               <div className="space-y-6">
-                <Link 
-                  to="/" 
-                  className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors" 
+                <Link
+                  to="/"
+                  className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Home
@@ -239,7 +241,7 @@ const Navbar = () => {
                     onClick={() => toggleMobileDropdown("help")}
                     className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
                   >
-                    Help Categories 
+                    Help Categories
                     <motion.div
                       animate={{ rotate: mobileActiveDropdown === "help" ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -256,15 +258,16 @@ const Navbar = () => {
                         className="mt-3 ml-4 space-y-3"
                       >
                         {helpCategories.map((item) => (
-                          <a
-                            key={item}
-                            href="#"
+                          <Link
+                            key={item.name}
+                            to={item.path || "/"}
                             className="block text-gray-500 hover:text-gray-700 transition-colors"
                             onClick={closeMobileMenu}
                           >
-                            {item}
-                          </a>
+                            {item.name}
+                          </Link>
                         ))}
+
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -276,7 +279,7 @@ const Navbar = () => {
                     onClick={() => toggleMobileDropdown("platforms")}
                     className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
                   >
-                    Platforms 
+                    Platforms
                     <motion.div
                       animate={{ rotate: mobileActiveDropdown === "platforms" ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -307,15 +310,15 @@ const Navbar = () => {
                   </AnimatePresence>
                 </div>
 
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Blog
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
                   onClick={closeMobileMenu}
                 >

@@ -7,9 +7,14 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
 
   const toggleDropdown = (dropdownName) => {
     setActiveDropdown((prev) => (prev === dropdownName ? null : dropdownName));
+  };
+
+  const toggleMobileDropdown = (dropdownName) => {
+    setMobileActiveDropdown((prev) => (prev === dropdownName ? null : dropdownName));
   };
 
   // Scroll listener for shrink effect
@@ -21,6 +26,18 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu when clicking outside or on overlay
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const platforms = [
     { name: "Coinbase", path: "/coinbase" },
     { name: "Paypal", path: "/paypal" },
@@ -29,6 +46,19 @@ const Navbar = () => {
     { name: "Charles Schwab", path: "/charlesschwab" },
     { name: "Cash App", path: "/cashapp" },
   ];
+
+  const helpCategories = [
+    "Login Issues",
+    "Payment Issues", 
+    "KYC Problems",
+    "Withdrawal Issues",
+    "Security & 2FA",
+  ];
+
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+    setMobileActiveDropdown(null);
+  };
 
   return (
     <div>
@@ -48,7 +78,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            {/* Center Navigation */}
+            {/* Center Navigation - Desktop */}
             <div className="hidden lg:flex items-center space-x-10">
               <Link
                 to="/"
@@ -57,7 +87,7 @@ const Navbar = () => {
                 Home
               </Link>
 
-              {/* Help Categories Dropdown */}
+              {/* Help Categories Dropdown - Desktop */}
               <div className="relative">
                 <button
                   onClick={() => toggleDropdown("help")}
@@ -73,13 +103,7 @@ const Navbar = () => {
                       exit={{ opacity: 0, y: -5 }}
                       className="absolute top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2"
                     >
-                      {[
-                        "Login Issues",
-                        "Payment Issues",
-                        "KYC Problems",
-                        "Withdrawal Issues",
-                        "Security & 2FA",
-                      ].map((item) => (
+                      {helpCategories.map((item) => (
                         <a
                           key={item}
                           href="#"
@@ -93,7 +117,7 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Platforms Dropdown */}
+              {/* Platforms Dropdown - Desktop */}
               <div className="relative">
                 <button
                   onClick={() => toggleDropdown("platforms")}
@@ -161,38 +185,157 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden border-t border-gray-100 py-4"
-              >
-                <div className="space-y-3">
-                  <Link to="/" className="block text-gray-600 font-normal" onClick={() => setIsMenuOpen(false)}>
-                    Home
-                  </Link>
-                  <a href="#" className="block text-gray-600 font-normal">
-                    Help Categories
-                  </a>
-                  <a href="#" className="block text-gray-600 font-normal">
-                    Platforms
-                  </a>
-                  <a href="#" className="block text-gray-600 font-normal">
-                    Blog
-                  </a>
-                  <a href="#" className="block text-gray-600 font-normal">
-                    Contact
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+            onClick={closeMobileMenu}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
+          >
+            <div className="p-6">
+              {/* Mobile Menu Header */}
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-xl font-bold text-gray-900">Menu</h2>
+                <button
+                  onClick={closeMobileMenu}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Mobile Menu Items */}
+              <div className="space-y-6">
+                <Link 
+                  to="/" 
+                  className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors" 
+                  onClick={closeMobileMenu}
+                >
+                  Home
+                </Link>
+
+                {/* Help Categories - Mobile */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileDropdown("help")}
+                    className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
+                  >
+                    Help Categories 
+                    <motion.div
+                      animate={{ rotate: mobileActiveDropdown === "help" ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-5 w-5" />
+                    </motion.div>
+                  </button>
+                  <AnimatePresence>
+                    {mobileActiveDropdown === "help" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-3 ml-4 space-y-3"
+                      >
+                        {helpCategories.map((item) => (
+                          <a
+                            key={item}
+                            href="#"
+                            className="block text-gray-500 hover:text-gray-700 transition-colors"
+                            onClick={closeMobileMenu}
+                          >
+                            {item}
+                          </a>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Platforms - Mobile */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileDropdown("platforms")}
+                    className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
+                  >
+                    Platforms 
+                    <motion.div
+                      animate={{ rotate: mobileActiveDropdown === "platforms" ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-5 w-5" />
+                    </motion.div>
+                  </button>
+                  <AnimatePresence>
+                    {mobileActiveDropdown === "platforms" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-3 ml-4 space-y-3"
+                      >
+                        {platforms.map((platform) => (
+                          <Link
+                            key={platform.name}
+                            to={platform.path}
+                            className="block text-gray-500 hover:text-gray-700 transition-colors"
+                            onClick={closeMobileMenu}
+                          >
+                            {platform.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <a 
+                  href="#" 
+                  className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
+                  onClick={closeMobileMenu}
+                >
+                  Blog
+                </a>
+                <a 
+                  href="#" 
+                  className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
+                  onClick={closeMobileMenu}
+                >
+                  Contact
+                </a>
+
+                {/* Mobile CTA Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full mt-8 px-6 py-3 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors"
+                  onClick={closeMobileMenu}
+                >
+                  Get started
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

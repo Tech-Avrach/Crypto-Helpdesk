@@ -51,8 +51,8 @@ const Navbar = () => {
     { name: "Login Issues", path: "/help-center/login-issues" },
     { name: "Payment Issues", path: "/help-center/payment-issues" },
     { name: "KYC Problems", path: "/help-center/kyc-issues" },
-    { name: "Withdrawal Issues", path: "/" },
-    { name: "Security & 2FA", path: "/" },
+    { name: "Withdrawal Issues", path: "/help-center/withdrawal-issues" },
+    { name: "Security & 2FA", path: "/help-center/security-2fa" },
   ];
 
 

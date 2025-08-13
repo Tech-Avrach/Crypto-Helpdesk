@@ -10,6 +10,8 @@ import CashApp from '../pages/Platforms/CashApp/CashApp';
 import LoginIssues from '@/pages/HelpCategories/LoginIssues/LoginIssues';
 import PaymentIssues from '@/pages/HelpCategories/PaymentIssues/PaymentIssues';
 import KYCProblem from '@/pages/HelpCategories/KYCProblems/KYCProblem';
+import WithdrawalIssue from '@/pages/HelpCategories/WithdrawalIssue/WithdrawalIssue';
+import Security2FA from '@/pages/HelpCategories/Security2FA/Security2FA';
 
 const AppRoutes = () => {
   return (
@@ -25,6 +27,8 @@ const AppRoutes = () => {
       <Route path="/help-center/login-issues" element={<LoginIssues />} />
       <Route path="/help-center/payment-issues" element={<PaymentIssues />} />
       <Route path="/help-center/kyc-issues" element={<KYCProblem />} />
+      <Route path="/help-center/withdrawal-issues" element={<WithdrawalIssue />} />
+      <Route path="/help-center/security-2fa" element={<Security2FA />} />
     </Routes>
   );
 };

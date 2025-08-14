@@ -55,6 +55,13 @@ const Navbar = () => {
     { name: "Security & 2FA", path: "/help-center/security-2fa" },
   ];
 
+  const blogPosts = [
+    { name: "Crypto Wallets", path: "/blog/blog1" },
+    { name: "Trading Shortcuts", path: "/blog/blog2" },
+    { name: "Best Crypto Apps", path: "/blog/blog3" },
+  ];
+
+
 
   const closeMobileMenu = () => {
     setIsMenuOpen(false);
@@ -150,18 +157,44 @@ const Navbar = () => {
                 </AnimatePresence>
               </div>
 
-              <a
-                href="#"
-                className="text-gray-600 hover:text-gray-900 font-normal text-base transition-colors"
-              >
-                Blog
-              </a>
-              <a
-                href="#"
+              {/* Blog Dropdown - Desktop */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown("blog")}
+                  className="flex items-center text-gray-600 hover:text-gray-900 font-normal text-base transition-colors"
+                >
+                  Blog <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+                <AnimatePresence>
+                  {activeDropdown === "blog" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      className="absolute top-full mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-100 py-2"
+                    >
+                      {blogPosts.map((post) => (
+                        <Link
+                          key={post.name}
+                          to={post.path}
+                          className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                          onClick={() => setActiveDropdown(null)}
+                        >
+                          {post.name}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <Link
+                to="/contact"
                 className="text-gray-600 hover:text-gray-900 font-normal text-base transition-colors"
               >
                 Contact
-              </a>
+              </Link>
+
             </div>
 
             {/* Right Side */}
@@ -310,20 +343,51 @@ const Navbar = () => {
                   </AnimatePresence>
                 </div>
 
-                <a
-                  href="#"
-                  className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  Blog
-                </a>
-                <a
-                  href="#"
+                {/* Blog - Mobile */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileDropdown("blog")}
+                    className="flex items-center justify-between w-full text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
+                  >
+                    Blog
+                    <motion.div
+                      animate={{ rotate: mobileActiveDropdown === "blog" ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown className="h-5 w-5" />
+                    </motion.div>
+                  </button>
+                  <AnimatePresence>
+                    {mobileActiveDropdown === "blog" && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-3 ml-4 space-y-3"
+                      >
+                        {blogPosts.map((post) => (
+                          <Link
+                            key={post.name}
+                            to={post.path}
+                            className="block text-gray-500 hover:text-gray-700 transition-colors"
+                            onClick={closeMobileMenu}
+                          >
+                            {post.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <Link
+                  to="/contact"
                   className="block text-gray-600 hover:text-gray-900 font-medium text-lg transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Contact
-                </a>
+                </Link>
+
 
                 {/* Mobile CTA Button */}
                 <motion.button

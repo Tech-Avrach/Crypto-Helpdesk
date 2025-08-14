@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -12,36 +13,21 @@ const Footer = () => {
           <div>
             <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">MENU</h3>
             <ul className="space-y-4">
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">Home</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">Help Categories</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">About Helpdesk</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">Supported Platforms</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">Security</a></li>
+              <li><Link to="/" className="text-gray-300 hover:text-yellow-400 transition-colors">Home</Link></li>
+              <li><Link to="/help-center/login-issues" className="text-gray-300 hover:text-yellow-400 transition-colors">Help Categories</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">Contact</Link></li>
+              <li><Link to="/coinbase" className="text-gray-300 hover:text-yellow-400 transition-colors">Supported Platforms</Link></li>
+              <li><Link to="/help-center/security-2fa" className="text-gray-300 hover:text-yellow-400 transition-colors">Security</Link></li>
             </ul>
           </div>
 
-          {/* DOWNLOAD */}
+          {/* BLOG */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">DOWNLOAD</h3>
+            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">BLOG</h3>
             <ul className="space-y-4">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                  iOS App
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                  Android App
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                  Chrome Extension
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
+              <li><Link to="/blog/blog1" className="text-gray-300 hover:text-yellow-400 transition-colors">Crypto Wallets</Link></li>
+              <li><Link to="/blog/blog2" className="text-gray-300 hover:text-yellow-400 transition-colors">Trading Shortcuts</Link></li>
+              <li><Link to="/blog/blog3" className="text-gray-300 hover:text-yellow-400 transition-colors">Best Crypto Apps</Link></li>
             </ul>
           </div>
 
@@ -49,21 +35,11 @@ const Footer = () => {
           <div>
             <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">RESOURCES</h3>
             <ul className="space-y-4">
+              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-yellow-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-conditions" className="text-gray-300 hover:text-yellow-400 transition-colors">Terms & Conditions</Link></li>
               <li>
-                <a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                  Help Guides
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
+                <a href="https://example.com/security-center" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
                   Security Center
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors flex items-center gap-2">
-                  Crypto Foundation
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
@@ -74,9 +50,17 @@ const Footer = () => {
           <div>
             <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">SUPPORT</h3>
             <ul className="space-y-4">
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">General Support</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">Discord Community</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-yellow-400 transition-colors">Telegram Chat</a></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-yellow-400 transition-colors">General Support</Link></li>
+              <li>
+                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-yellow-400 transition-colors">
+                  Discord Community
+                </a>
+              </li>
+              <li>
+                <a href="https://t.me" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-yellow-400 transition-colors">
+                  Telegram Chat
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -86,10 +70,13 @@ const Footer = () => {
           <div className="text-gray-500 text-sm">
             © All Rights Reserved
           </div>
-          <div className="mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors text-sm">
-              Licenses
-            </a>
+          <div className="mt-4 md:mt-0 flex gap-6">
+            <Link to="/privacy-policy" className="text-gray-400 hover:text-yellow-400 transition-colors text-sm">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-conditions" className="text-gray-400 hover:text-yellow-400 transition-colors text-sm">
+              Terms & Conditions
+            </Link>
           </div>
         </div>
       </div>

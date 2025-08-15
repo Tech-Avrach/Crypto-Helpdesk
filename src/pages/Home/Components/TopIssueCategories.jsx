@@ -43,7 +43,7 @@ import {
             </div>
             
             {/* Right side - Image */}
-            <div className="flex-1 flex items-center">
+            <div className="hidden lg:flex flex-1 items-center">
               <img 
                 src="https://cdn.prod.website-files.com/6217a376b29e9be35c01ccfc/623c90e44e21cf3db90ad9c3_tab-image-1-web3-webflow-ecommerce-template.png"
                 alt="Crypto dashboard interface"

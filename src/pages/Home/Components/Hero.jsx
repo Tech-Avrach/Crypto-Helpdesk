@@ -41,7 +41,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50/80 via-pink-50/60 to-yellow-50/80 relative overflow-hidden">
+    <div className="min-h-screen pt-32 md:pt-0 bg-gradient-to-br from-blue-50/80 via-pink-50/60 to-yellow-50/80 relative overflow-hidden">
       
       {/* Navbar - Exact Reference Style */}
 
